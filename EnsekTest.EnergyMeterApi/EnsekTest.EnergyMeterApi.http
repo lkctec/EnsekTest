@@ -1,0 +1,6 @@
+@EnsekTest.EnergyMeterApi_HostAddress = http://localhost:5127
+
+POST {{EnsekTest.EnergyMeterApi_HostAddress}}/api/meterreading/
+Accept: application/json
+
+###
