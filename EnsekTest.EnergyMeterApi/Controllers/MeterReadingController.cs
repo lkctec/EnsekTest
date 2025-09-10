@@ -15,6 +15,17 @@ namespace EnsekTest.EnergyMeterApi.Controllers
             _restApiService = restApiService;
         }
 
+        /// <summary>
+        /// Uploads and processes a CSV file containing meter readings.
+        /// </summary>
+        /// <param name="file">The CSV file containing meter readings with columns: AccountId, MeterReadingDateTime, MeterReadValue.</param>
+        /// <returns>
+        /// A result object containing the count of successful and failed readings, along with any error messages.
+        /// Returns 200 OK with results, 400 Bad Request for validation errors, or 500 Internal Server Error for unexpected errors.
+        /// </returns>
+        /// <response code="200">Successfully processed the CSV file (may include partial failures).</response>
+        /// <response code="400">Invalid file format, missing file, or all readings failed validation.</response>
+        /// <response code="500">An unexpected server error occurred during processing.</response>
         [HttpPost("meter-reading-uploads")]
         public async Task<ActionResult<MeterReadingUploadResult>> UploadMeterReadings(IFormFile file)
         {
