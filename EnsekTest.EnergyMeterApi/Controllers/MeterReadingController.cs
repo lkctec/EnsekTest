@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using EnergyMeterApi.Models;
 using EnsekTest.EnergyMeterApi.Services;
 
@@ -19,16 +18,16 @@ namespace EnsekTest.EnergyMeterApi.Controllers
         [HttpPost("meter-reading-uploads")]
         public async Task<ActionResult<MeterReadingUploadResult>> UploadMeterReadings(IFormFile file)
         {
+            var errorResult = new MeterReadingUploadResult();
             if (file == null || file.Length == 0)
             {
-                var errorResult = new MeterReadingUploadResult();
+                
                 errorResult.Errors.Add("No file provided or file is empty");
                 return BadRequest(errorResult);
             }
 
             if (!file.FileName.EndsWith(".csv", StringComparison.OrdinalIgnoreCase))
             {
-                var errorResult = new MeterReadingUploadResult();
                 errorResult.Errors.Add("File must be a CSV file");
                 return BadRequest(errorResult);
             }
@@ -47,7 +46,6 @@ namespace EnsekTest.EnergyMeterApi.Controllers
             }
             catch (Exception ex)
             {
-                var errorResult = new MeterReadingUploadResult();
                 errorResult.Errors.Add($"Unexpected error: {ex.Message}");
                 return StatusCode(500, errorResult);
             }
